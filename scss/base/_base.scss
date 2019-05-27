@@ -1,0 +1,21 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+    // This is define 1 rem = 10px
+    font-size: 62.5%;
+    -ms-text-size-adjust: 100%;
+    font-family: 'Montserrat', 'Roboto', 'Lato', sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    box-sizing: border-box;
+}

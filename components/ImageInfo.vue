@@ -1,5 +1,5 @@
 <template>
-  <div class="imageShow">Show infomation image here</div>
+  <div class="imageInfo">Show infomation image here</div>
 </template>
 
 <script>
@@ -12,8 +12,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import "../styles/variables";
-.imageShow {
+// @import "~/assets/scss/main.scss";
+.imageInfo {
   height: 100%;
   flex: 1.5 1 0;
 }

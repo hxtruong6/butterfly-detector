@@ -30,14 +30,14 @@ export default {
   },
   methods: {
     getImgUrl(pic) {
-      return require("~assets/" + pic);
+      return require("~/assets/images/" + pic);
     }
   }
 };
 </script>
 
 <style lang='scss' scoped>
-@import "../styles/variables";
+// @import "~/assets/scss/main.scss";
 .imageUpload {
   background-color: $secondary-color;
   height: 100%;

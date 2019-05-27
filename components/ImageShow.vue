@@ -19,14 +19,13 @@ export default {
   },
   methods: {
     getImgUrl(pic) {
-      return require("../assets/" + pic);
+      return require("~/assets/images/" + pic);
     }
   }
 };
 </script>
 
 <style lang='scss' scoped>
-@import "../styles/variables";
 .imageShow {
   background-color: $red-color-light;
   height: 100%;

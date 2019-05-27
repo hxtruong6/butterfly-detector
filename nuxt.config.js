@@ -24,7 +24,8 @@ export default {
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
             {
                 rel: 'stylesheet',
-                href: 'https://fonts.googleapis.com/css?family=Roboto',
+                href:
+                    'https://fonts.googleapis.com/css?family=Lato|Montserrat|Roboto&display=swap',
             },
         ],
     },
@@ -40,12 +41,19 @@ export default {
     css: [
         'element-ui/lib/theme-chalk/index.css',
         // Load a Node.js module directly (here it's a Sass file)
-        // 'bulma',
+        'bulma/css/bulma.css',
         // // CSS file in the project
         // // '@/assets/css/main.css',
         // SCSS file in the project
-        '@/assets/scss/main.scss',
+        '~/scss/main.scss',
     ],
+    render: {
+        bundleRenderer: {
+            shouldPreload: (file, type) => {
+                return ['script', 'style', 'font'].includes(type);
+            },
+        },
+    },
 
     /*
      ** Plugins to load before mounting the App
@@ -55,9 +63,10 @@ export default {
     /*
      ** Nuxt.js modules
      */
-    modules: [
-      // '@nuxtjs/bulma'
-    ],
+    modules: ['@nuxtjs/style-resources'],
+    styleResources: {
+        scss: ['~scss/main.scss'],
+    },
 
     /*
      ** Build configuration
@@ -89,11 +98,4 @@ export default {
             // }
         },
     },
-    // render: {
-    //     bundleRenderer: {
-    //       shouldPreload: (file, type) => {
-    //         return ['script', 'style', 'font'].includes(type)
-    //       }
-    //     }
-    //   }
 };
