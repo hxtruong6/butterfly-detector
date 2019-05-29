@@ -11,7 +11,6 @@ html {
     font-size: 62.5%;
     -ms-text-size-adjust: 100%;
     font-family: 'Montserrat', 'Roboto', 'Lato', sans-serif;
-    -webkit-text-size-adjust: 100%;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
 }
@@ -19,3 +18,15 @@ html {
 body {
     box-sizing: border-box;
 }
+
+// div#__nuxt,
+// #__layout,
+// #__layout > div,
+// #app {
+//     min-height: 100vh;
+// }
+
+// #app {
+//     display: flex;
+//     flex-flow: column nowrap;
+// }

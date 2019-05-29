@@ -37,10 +37,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-// @import "~/assets/scss/main.scss";
 .imageUpload {
   background-color: $secondary-color;
-  height: 100%;
   display: flex;
   justify-content: space-around;
   flex-flow: column nowrap;

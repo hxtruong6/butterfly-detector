@@ -28,7 +28,6 @@ export default {
 <style lang='scss' scoped>
 .imageShow {
   background-color: $red-color-light;
-  height: 100%;
   display: flex;
   flex-flow: column nowrap;
   flex: 2 1 0;

@@ -24,9 +24,8 @@ export default {
 <style>
 .detector {
   display: flex;
+  flex: 1 1 0;
   flex-direction: row;
   justify-content: space-between;
-  width: 100%;
-  height: 100%;
 }
 </style>
