@@ -1,8 +1,8 @@
 <template>
   <div class="imageShow">
-    <div class="imageShow__area">
-      <h3 class="imageShow__toggle">Origin Image</h3>
-      <img class="imageShow__display" :src="url||imageUrl">
+    <div class="imageShow__area image">
+      <h3 class="image__toggle">Origin Image</h3>
+      <img class="image__display" :src="url||imageUrl">
     </div>
     <div class="imageShow__history">Image story</div>
   </div>
@@ -40,10 +40,25 @@ export default {
   flex-flow: column nowrap;
   flex: 2 1 0;
 
-  &__image {
+  &__area,
+  .image {
     flex: 3 1 0;
-    max-width: 95%;
-    max-height: 95%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: center;
+    justify-content: center;
+
+    &__toggle {
+      top: 2px;
+      position: absolute;
+    }
+
+    &__display {
+      align-self: center;
+      padding: 10px;
+      max-height: 85%;
+      width: auto;
+    }
   }
 
   &__history {

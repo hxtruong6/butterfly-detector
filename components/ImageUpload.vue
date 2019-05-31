@@ -5,12 +5,7 @@
       <p class="dropArea__info">You can upload/drop a photo or paste a URL of an image</p>
       <div class="dropArea__input">
         <img class="dropArea__input--icon" :src="getImgUrl(uploadIcon)" title="Upload/drop image">
-        <input
-          type="file"
-          @change="onFileChanged"
-          accept="image/*"
-          class="dropArea__input--file"
-        >
+        <input type="file" @change="onFileChanged" accept="image/*" class="dropArea__input--file">
       </div>
     </div>
     <div class="imageUpload___pasteLink pastelink">
@@ -22,7 +17,7 @@
         title="URL image"
       >
     </div>
-    <button class="imageUpload__btn" @click="onUpload">Upload</button>
+    <button class="imageUpload__btn" @click="onDetect">Detect</button>
   </div>
 </template>
 
@@ -52,7 +47,7 @@ export default {
       console.log("xxx 004 url: ", url);
       this.$store.commit("image/onFileChanged", url);
     },
-    onUpload() {
+    onDetect() {
       // upload file
       console.log("xxx 001 upload file: ", this.selectedFile);
       // this.$store.commit("uploadFile", this.selectedFile);
@@ -68,7 +63,7 @@ export default {
   justify-content: space-around;
   flex-flow: column nowrap;
   flex: 1 1 0;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
 
   &__dropArea {
   }
@@ -88,10 +83,11 @@ export default {
       height: max-content;
       border: 1px dashed;
       padding: 25px;
-
+      opacity: 0.7;
       &:hover {
-        border: 2px dashed;
-        padding: 26px;
+        // border: 2px dashed;
+        // padding: 26px;
+        opacity: 1;
       }
 
       &--file {
