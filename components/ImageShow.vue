@@ -1,7 +1,11 @@
 <template>
   <div class="imageShow">
     <div class="imageShow__area image">
-      <h3 class="image__toggle">Origin Image</h3>
+      <div class="image__toggle">
+        <h3 class="imageView">Origin Image</h3>
+        <div v-if="file">/</div>
+        <h3 class="imageView" v-if="file">Detected Image</h3>
+      </div>
       <img class="image__display" :src="url||imageUrl">
     </div>
     <div class="imageShow__history">Image story</div>
@@ -15,7 +19,7 @@ export default {
   name: "ImageShow",
   computed: {
     ...mapState({
-      file: state => state.image.file,
+      file: state => state.image.file || true,
       url: state => state.image.url
     }),
     imageUrl() {
@@ -49,8 +53,25 @@ export default {
     justify-content: center;
 
     &__toggle {
+      margin: 4px;
       top: 2px;
       position: absolute;
+      display: flex;
+      font-weight: bold;
+      font-size: 1.5rem;
+      cursor: pointer;
+
+      .imageView {
+        margin: 1px;
+        opacity: 0.8;
+        transition: all 0.2s ease;
+
+        &:hover {
+          opacity: 1;
+          transform: translate(-2px) scale(1.05);
+          font-weight: bolder;
+        }
+      }
     }
 
     &__display {
