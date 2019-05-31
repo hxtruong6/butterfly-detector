@@ -3,8 +3,14 @@
     <div class="imageUpload__dropArea dropArea">
       <h2 class="dropArea__title">Upload your image</h2>
       <p class="dropArea__info">You can upload/drop a photo or paste a URL of an image</p>
-      <div class="dropArea__icon">
-        <img :src="getImgUrl(uploadIcon)" title="Upload/drop image">
+      <div class="dropArea__input">
+        <img class="dropArea__input--icon" :src="getImgUrl(uploadIcon)" title="Upload/drop image">
+        <input
+          type="file"
+          @change="onFileChanged"
+          accept="image/*"
+          class="dropArea__input--file"
+        >
       </div>
     </div>
     <div class="imageUpload___pasteLink pastelink">
@@ -16,21 +22,40 @@
         title="URL image"
       >
     </div>
-    <button class="imageUpload__btn">Upload</button>
+    <button class="imageUpload__btn" @click="onUpload">Upload</button>
   </div>
 </template>
 
 <script>
+// const STATUS_INITIAL = 0,
+//   STATUS_SAVING = 1,
+//   STATUS_SUCCESS = 2,
+//   STATUS_FAILED = 3;
+
 export default {
   name: "ImageUpload",
   data() {
     return {
-      uploadIcon: "image-upload.png"
+      uploadIcon: "image-upload.png",
+      selectedFile: null,
+      url: null
     };
   },
   methods: {
     getImgUrl(pic) {
       return require("~/assets/images/" + pic);
+    },
+    onFileChanged(event) {
+      console.log("xxx 000 onFileChanged: ", event.target.files);
+      this.selectedFile = event.target.files[0];
+      const url = URL.createObjectURL(this.selectedFile);
+      console.log("xxx 004 url: ", url);
+      this.$store.commit("image/onFileChanged", url);
+    },
+    onUpload() {
+      // upload file
+      console.log("xxx 001 upload file: ", this.selectedFile);
+      // this.$store.commit("uploadFile", this.selectedFile);
     }
   }
 };
@@ -58,7 +83,7 @@ export default {
     }
     &__info {
     }
-    &__icon {
+    &__input {
       width: max-content;
       height: max-content;
       border: 1px dashed;
@@ -67,6 +92,12 @@ export default {
       &:hover {
         border: 2px dashed;
         padding: 26px;
+      }
+
+      &--file {
+        opacity: 1; /* invisible but it's there! */
+        width: 100%;
+        cursor: pointer;
       }
     }
   }
