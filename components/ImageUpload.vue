@@ -9,12 +9,13 @@
       </div>
     </div>
     <div class="imageUpload___pasteLink pastelink">
-      <h3 class="pastelink__title">Paste URL</h3>
+      <h2 class="pastelink__title">Paste URL</h2>
       <input
         class="pastelink__input"
         type="text"
         placeholder="www.common-buckeye.jpg"
         title="URL image"
+        @change="onPasteLink"
       >
     </div>
     <button class="imageUpload__btn" @click="onDetect">Detect</button>
@@ -46,6 +47,10 @@ export default {
       const url = URL.createObjectURL(this.selectedFile);
       console.log("xxx 004 url: ", url);
       this.$store.commit("image/onFileChanged", url);
+    },
+    onPasteLink(event) {
+      const link = event.target.value;
+      this.$store.commit("image/onFileChanged", link);
     },
     onDetect() {
       // upload file
