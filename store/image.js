@@ -8,7 +8,7 @@ export const mutations = {
     onFileChanged(state, url) {
         state.url = url;
     },
-    uploadFile(state, file) {
-        state.file = file;
-    },
+    onDetect(state, file) {
+        
+    }
 };

@@ -63,11 +63,17 @@ export default {
     /*
      ** Nuxt.js modules
      */
-    modules: ['@nuxtjs/style-resources'],
+    modules: ['@nuxtjs/style-resources', '@nuxtjs/axios'],
     styleResources: {
         scss: ['~scss/main.scss'],
     },
-
+    axios: {
+        // proxyHeaders: false
+        proxy: true,
+    },
+    proxy: {
+        '/api/': 'http://localhost:8000',
+    },
     /*
      ** Build configuration
      */

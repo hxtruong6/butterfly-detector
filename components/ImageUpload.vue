@@ -3,11 +3,20 @@
     <div class="imageUpload__dropArea dropArea">
       <h2 class="dropArea__title">Upload your image</h2>
       <p class="dropArea__info">You can upload/drop a photo or paste a URL of an image</p>
-      <div class="dropArea__input">
-        <img class="dropArea__input--icon" :src="getImgUrl(uploadIcon)" title="Upload/drop image">
-        <input type="file" @change="onFileChanged" accept="image/*" class="dropArea__input--file">
-      </div>
     </div>
+    <input
+      class="dropArea__input"
+      type="file"
+      @change="onFileChanged"
+      accept="image/*"
+      name="file"
+      id="file"
+    >
+    <label class="dropArea__label dropArea__label--border" for="file">
+      <img :src="getImgUrl(uploadIcon)" title="Upload/drop image">
+      <br>
+      <h2>Choose a file</h2>
+    </label>
     <div class="imageUpload___pasteLink pastelink">
       <h2 class="pastelink__title">Paste URL</h2>
       <input
@@ -18,7 +27,7 @@
         @change="onPasteLink"
       >
     </div>
-    <button class="imageUpload__btn" @click="onDetect">Detect</button>
+    <button class="imageUpload__btn" :disabled="!selectedFile" @click="onDetect">Detect</button>
   </div>
 </template>
 
@@ -42,10 +51,9 @@ export default {
       return require("~/assets/images/" + pic);
     },
     onFileChanged(event) {
-      console.log("xxx 000 onFileChanged: ", event.target.files);
       this.selectedFile = event.target.files[0];
+      this.uploadIcon = "image-uploaded.png";
       const url = URL.createObjectURL(this.selectedFile);
-      console.log("xxx 004 url: ", url);
       this.$store.commit("image/onFileChanged", url);
     },
     onPasteLink(event) {
@@ -53,9 +61,23 @@ export default {
       this.$store.commit("image/onFileChanged", link);
     },
     onDetect() {
-      // upload file
-      console.log("xxx 001 upload file: ", this.selectedFile);
-      // this.$store.commit("uploadFile", this.selectedFile);
+      let formData = new FormData();
+      formData.append("file", this.selectedFile);
+      this.$axios
+        .post("/single-file", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(function() {
+          console.log("SUCCESS!!");
+          // TODO: not working
+          // this.selectedFile = null;
+          // this.uploadIcon = "image-upload.png";
+        })
+        .catch(function() {
+          console.log("FAILURE!!");
+        });
     }
   }
 };
@@ -70,6 +92,8 @@ export default {
   flex: 1 1 0;
   transition: all 0.2s ease;
 
+  font-size: 1.4rem;
+
   &__dropArea {
   }
 
@@ -77,28 +101,59 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 
     &__title {
       font-weight: bold;
     }
     &__info {
     }
-    &__input {
-      width: max-content;
-      height: max-content;
-      border: 1px dashed;
-      padding: 25px;
-      opacity: 0.7;
-      &:hover {
-        // border: 2px dashed;
-        // padding: 26px;
-        opacity: 1;
-      }
 
-      &--file {
-        opacity: 1; /* invisible but it's there! */
-        width: 100%;
-        cursor: pointer;
+    &__input {
+      width: 0.1px;
+      height: 0.1px;
+      opacity: 0;
+      overflow: hidden;
+      position: absolute;
+      z-index: -1;
+    }
+    &__input + label {
+      font-size: 1.3rem;
+      font-weight: bold;
+      // color: white;
+      // display: inline-block;
+      cursor: pointer;
+
+      opacity: 0.7;
+    }
+
+    &__input:focus + label,
+    &__input + label:hover {
+      opacity: 1;
+      font-weight: bolder;
+      font-size: 1.4rem;
+    }
+
+    &__label {
+      margin: 5px;
+      padding: 5px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      align-content: space-around;
+      justify-content: space-around;
+
+      &--border {
+        border-top: 2px solid $primary-color-light;
+        border-bottom: 2px solid $red-color-light;
+        background-image: linear-gradient(
+            $primary-color-light,
+            $red-color-light
+          ),
+          linear-gradient($primary-color-light, $red-color-light);
+        background-size: 2px 100%;
+        background-position: 0 0, 100% 0;
+        background-repeat: no-repeat;
       }
     }
   }
@@ -124,8 +179,13 @@ export default {
     font-weight: bold;
 
     &:hover {
-      transform: translateY(-2px) scale(1.15);
+      transform: translateY(-2px) scale(1.1);
       box-shadow: 0px 2px 20px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      transform: scale(0.95);
     }
   }
 }

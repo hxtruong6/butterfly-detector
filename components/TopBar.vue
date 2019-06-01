@@ -30,6 +30,7 @@ export default {
     padding: 3px;
     max-width: 50px;
     max-height: 50px;
+    animation: moveInLeft 1s ease-in-out;
   }
 
   &__header {
