@@ -217,3 +217,9 @@ dmypy.json
 
 # Service worker
 sw.*
+
+# For custom
+*.weights
+*.jpg
+*.png
+libdarknet*
