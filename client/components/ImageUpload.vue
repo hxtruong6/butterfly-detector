@@ -64,7 +64,7 @@ export default {
       let formData = new FormData();
       formData.append("file", this.selectedFile);
       this.$axios
-        .post("/single-file", formData, {
+        .post("image", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }

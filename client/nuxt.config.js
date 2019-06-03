@@ -1,5 +1,6 @@
 import pkg from './package';
 
+const flaskApiUrl = 'http://127.0.0.1:5000/';
 export default {
     mode: 'spa',
 
@@ -63,16 +64,26 @@ export default {
     /*
      ** Nuxt.js modules
      */
-    modules: ['@nuxtjs/style-resources', '@nuxtjs/axios'],
+    modules: ['@nuxtjs/style-resources', '@nuxtjs/axios', '@nuxtjs/proxy'],
     styleResources: {
         scss: ['~scss/main.scss'],
     },
+
     axios: {
-        // proxyHeaders: false
+        baseURL: flaskApiUrl,
+        prefix: '/api',
         proxy: true,
     },
+
+    /**
+     * Proxy module settings
+     */
     proxy: {
-        '/api/': 'http://localhost:8000',
+        '/api': {
+            target: flaskApiUrl,
+            ws: false,
+            pathRewrite: { '^/api/': '' },
+        },
     },
     /*
      ** Build configuration
