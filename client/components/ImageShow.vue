@@ -44,6 +44,7 @@ export default {
   watch: {
     detectedUrl: function() {
       this.isOriginImg = false;
+      this.$store.commit("image/getResult");
     }
   },
   methods: {

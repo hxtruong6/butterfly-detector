@@ -5,6 +5,7 @@ export const state = () => ({
     detectedImage: null,
     url: null,
     detectedUrl: null,
+    result: null,
 });
 
 export const mutations = {
@@ -23,7 +24,7 @@ export const mutations = {
                 },
             })
             .then((res) => {
-                console.log('SUCCESS!! ', res);
+                console.log('DETECT SUCCESS!! ', res);
                 const blob = new Blob([res.data], { type: 'image/*' });
                 const url = URL.createObjectURL(blob);
                 state.detectedImage = blob;
@@ -31,7 +32,18 @@ export const mutations = {
                 // FileSaver.saveAs(blob, `prediction.jpg`);
             })
             .catch(() => {
-                console.log('FAILURE!!');
+                console.log('DETECT FAILURE!!');
+            });
+    },
+    async getResult(state) {
+        await this.$axios
+            .get('result')
+            .then((res) => {
+                console.log('GET SUCCESS: ', res);
+                state.result = res.data;
+            })
+            .catch((e) => {
+                console.log('GET FAILURE!!');
             });
     },
 };

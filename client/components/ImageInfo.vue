@@ -1,12 +1,35 @@
 <template>
-  <div class="imageInfo">Show infomation image here</div>
+  <div class="imageInfo">{{currResult}}</div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "ImageInfo",
+  computed: {
+    ...mapState({
+      result:
+        // {
+        //   get:
+        state => state.image.result
+      // set: newResult => {
+      //   console.log("xxx 202 newResult: ", newResult);
+      //   return newResult;
+      // }
+      // }
+    })
+  },
   data() {
-    return {};
+    return {
+      currResult: this.result || "No any image for detecting!!!"
+    };
+  },
+  watch: {
+    result: function(val) {
+      console.log("xxx result change: ", val);
+      this.currResult = val;
+    }
   }
 };
 </script>
@@ -15,5 +38,6 @@ export default {
 .imageInfo {
   flex: 1.5 1 0;
   background-color: $red-color-light;
+  font-size: 1.5rem;
 }
 </style>
