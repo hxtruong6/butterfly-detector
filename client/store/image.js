@@ -6,6 +6,7 @@ export const state = () => ({
     url: null,
     detectedUrl: null,
     result: null,
+    loading: false,
 });
 
 export const mutations = {
@@ -16,6 +17,7 @@ export const mutations = {
     async onDetect(state) {
         let formData = new FormData();
         formData.append('file', state.originImage);
+        state.loading = true;
         await this.$axios
             .post('image', formData, {
                 responseType: 'blob',
@@ -42,6 +44,9 @@ export const mutations = {
             })
             .catch(() => {
                 console.log('DETECT FAILURE!!');
+            })
+            .finally(() => {
+                state.loading = false;
             });
     },
     async getResult(state) {

@@ -27,7 +27,15 @@
         @change="onPasteLink"
       >
     </div>
-    <button class="imageUpload__btn" :disabled="disableDetectBtn" @click="onDetect">Detect</button>
+    <div
+      class="imageUpload__btn detectBtn"
+      v-loading="loading"
+      element-loading-spinner="el-icon-loading"
+      element-loading-background="rgba(0, 0, 0, 0.1)"
+    >
+      <button class="detectBtn__detect" :disabled="disableDetectBtn" @click="onDetect">Detect</button>
+      <!-- <el-progress class="detectBtn__progress" :percentage="percentage" :status="status"></el-progress> -->
+    </div>
   </div>
 </template>
 
@@ -39,13 +47,16 @@ export default {
   computed: {
     ...mapState({
       url: state => state.image.url,
-      detectedUrl: state => state.image.detectedUrl
+      detectedUrl: state => state.image.detectedUrl,
+      loading: state => state.image.loading
     })
   },
   data() {
     return {
       uploadIcon: "image-upload.png",
       disableDetectBtn: true
+      // percentage: 0,
+      // status: null
     };
   },
   methods: {
@@ -62,11 +73,19 @@ export default {
       const link = event.target.value;
       this.$store.commit("image/onFileChanged", link);
     },
-    async onDetect() {
-      await this.$store.commit("image/onDetect");
+    // sleep(ms) {
+    //   return new Promise(resolve => setTimeout(resolve, ms));
+    // },
+    onDetect() {
+      this.$store.commit("image/onDetect");
+      console.log("xx 401 loading: ", this.loading);
+
       this.uploadIcon = "image-upload.png";
       this.disableDetectBtn = true;
     }
+    // format(percentage) {
+    //   return percentage === 100 ? "Full" : `${percentage}%`;
+    // }
   }
 };
 </script>
@@ -156,25 +175,35 @@ export default {
     }
   }
 
-  &__btn {
-    width: 50%;
+  &__btn,
+  .detectBtn {
+    width: 60%;
     align-self: center;
-    text-transform: uppercase;
-    background: $white-color;
-    padding: 10px;
-    border: 2px solid $red-color-light;
-    display: inline-block;
-    font-weight: bold;
+    display: flex;
+    flex-flow: column nowrap;
 
-    &:hover {
-      transform: translateY(-2px) scale(1.1);
-      box-shadow: 0px 2px 20px -5px rgba(0, 0, 0, 0.5);
-    }
+    &__detect {
+      text-transform: uppercase;
+      background: $white-color;
+      padding: 10px;
+      border: 2px solid $red-color-light;
+      display: inline-block;
+      font-weight: bold;
 
-    &:disabled {
-      opacity: 0.6;
-      transform: scale(0.95);
+      &:hover {
+        transform: translateY(-2px) scale(1.1);
+        box-shadow: 0px 2px 20px -5px rgba(0, 0, 0, 0.5);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        transform: scale(0.95);
+      }
     }
+    // &__progress {
+    //   width: 120%;
+    //   margin-left: 1%;
+    // }
   }
 }
 </style>
