@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, url_for
+from flask import Flask, flash, request, send_file
 from werkzeug.utils import secure_filename
 import sys
 import subprocess
@@ -21,17 +21,17 @@ def detect(imagePath):
     dataFile = b'configFile/butterfly-obj.data'
     configFile = b'configFile/butterfly-yolov3.cfg'
     weightFile = b'butterfly-yolov3_6000.weights'
+    print("Start detecting...")
     result = subprocess.run([darknet, "detector", "test", dataFile, configFile, weightFile, imagePath],
                             capture_output=True)
-
+    print("Finish detection")
     return result.stdout
 
 
 @app.route('/image', methods=['GET', 'POST'])
-def upload_file():
-    # file = request.files['file']
-    # return file.filename + 'fucking'
-    result = None
+def image_detection():
+    # result = None
+    image_path = None
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -47,8 +47,10 @@ def upload_file():
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(image_path)
             result = detect(image_path)
+            print(b"The processed image: " + result)
 
-    return b"The processed image: " + result
+    image_result = "predictions.jpg"
+    return send_file(image_result, mimetype='image/*')
 
 
 if __name__ == '__main__':
