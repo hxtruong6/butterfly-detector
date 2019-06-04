@@ -31,9 +31,13 @@
       class="imageUpload__btn detectBtn"
       v-loading="loading"
       element-loading-spinner="el-icon-loading"
-      element-loading-background="rgba(0, 0, 0, 0.1)"
+      element-loading-background="rgba(0, 0, 0, 0.05)"
     >
-      <button class="detectBtn__detect" :disabled="disableDetectBtn" @click="onDetect">Detect</button>
+      <button
+        class="detectBtn__detect"
+        :disabled="disableDetectBtn||loading"
+        @click="onDetect"
+      >Detect</button>
       <!-- <el-progress class="detectBtn__progress" :percentage="percentage" :status="status"></el-progress> -->
     </div>
   </div>
@@ -69,9 +73,16 @@ export default {
       this.$store.commit("image/onFileChanged", originImage);
       this.disableDetectBtn = false;
     },
+    checkURL(url) {
+      return url.match(/\.(jpeg|jpg|png)$/) != null;
+    },
     onPasteLink(event) {
+      // Test: https://pbs.twimg.com/media/DiLYBR9VMAAfvSU.jpg
       const link = event.target.value;
-      this.$store.commit("image/onFileChanged", link);
+      if (this.checkURL(link)) {
+        this.$store.commit("image/onPasteLink", link);
+        this.disableDetectBtn = false;
+      }
     },
     // sleep(ms) {
     //   return new Promise(resolve => setTimeout(resolve, ms));

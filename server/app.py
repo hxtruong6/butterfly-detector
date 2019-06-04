@@ -61,7 +61,7 @@ def image_detection():
         if file.filename == '':
             flash('No selected file')
             return "No image"
-        result = "detect you =))"
+        result = "Can not detect"
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)

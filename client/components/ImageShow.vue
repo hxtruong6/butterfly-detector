@@ -17,7 +17,7 @@
       </div>
       <img class="image__display" :src="getDisplayImg()">
     </div>
-    <div class="imageShow__history">Image story</div>
+    <div class="imageShow__history">History</div>
   </div>
 </template>
 
@@ -70,6 +70,7 @@ export default {
   display: flex;
   flex-flow: column nowrap;
   flex: 2 1 0;
+  font-size: 1.5rem;
 
   &__area,
   .image {
@@ -85,7 +86,7 @@ export default {
       position: absolute;
       display: flex;
       font-weight: bold;
-      font-size: 1.5rem;
+
       cursor: pointer;
 
       .imageView {
@@ -114,6 +115,7 @@ export default {
   }
 
   &__history {
+    margin-left: 4px;
     flex: 1 1 0;
   }
 }
