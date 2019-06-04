@@ -27,23 +27,28 @@
         @change="onPasteLink"
       >
     </div>
-    <button class="imageUpload__btn" :disabled="!selectedFile" @click="onDetect">Detect</button>
+    <button
+      class="imageUpload__btn"
+      :disabled="!url || detectedUrl"
+      @click="onDetect"
+    >Detect</button>
   </div>
 </template>
 
 <script>
-// const STATUS_INITIAL = 0,
-//   STATUS_SAVING = 1,
-//   STATUS_SUCCESS = 2,
-//   STATUS_FAILED = 3;
+import { mapState } from "vuex";
 
 export default {
   name: "ImageUpload",
+  computed: {
+    ...mapState({
+      url: state => state.image.url,
+      detectedUrl: state => state.image.detectedUrl
+    })
+  },
   data() {
     return {
-      uploadIcon: "image-upload.png",
-      selectedFile: null,
-      url: null
+      uploadIcon: "image-upload.png"
     };
   },
   methods: {
@@ -51,34 +56,17 @@ export default {
       return require("~/assets/images/" + pic);
     },
     onFileChanged(event) {
-      this.selectedFile = event.target.files[0];
+      const originImage = event.target.files[0];
       this.uploadIcon = "image-uploaded.png";
-      const url = URL.createObjectURL(this.selectedFile);
-      this.$store.commit("image/onFileChanged", url);
+      this.$store.commit("image/onFileChanged", originImage);
     },
     onPasteLink(event) {
       const link = event.target.value;
       this.$store.commit("image/onFileChanged", link);
     },
-    onDetect() {
-      let formData = new FormData();
-      formData.append("file", this.selectedFile);
-      this.$axios
-        .post("image", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-        .then(function(data) {
-          console.log("SUCCESS!!");
-          console.log("Data: ", data);
-          // TODO: not working
-          // this.selectedFile = null;
-          // this.uploadIcon = "image-upload.png";
-        })
-        .catch(function() {
-          console.log("FAILURE!!");
-        });
+    async onDetect() {
+      await this.$store.commit("image/onDetect");
+      this.uploadIcon = "image-upload.png";
     }
   }
 };
