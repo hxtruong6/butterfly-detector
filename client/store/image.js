@@ -22,6 +22,15 @@ export const mutations = {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
+                onDownloadProgress: function(progressEvent) {
+                    console.log(
+                        'download',
+                        progressEvent.loaded,
+                        progressEvent.total,
+                    );
+                },
+                onUploadProgress: (progressEvent) =>
+                    console.log(progressEvent.loaded),
             })
             .then((res) => {
                 console.log('DETECT SUCCESS!! ', res);
@@ -40,6 +49,7 @@ export const mutations = {
             .get('result')
             .then((res) => {
                 console.log('GET SUCCESS: ', res);
+                console.log('xxx 300 type of data: ', typeof res.data);
                 state.result = res.data;
             })
             .catch((e) => {
