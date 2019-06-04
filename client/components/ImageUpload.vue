@@ -69,8 +69,9 @@ export default {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(function() {
+        .then(function(data) {
           console.log("SUCCESS!!");
+          console.log("Data: ", data);
           // TODO: not working
           // this.selectedFile = null;
           // this.uploadIcon = "image-upload.png";
