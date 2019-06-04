@@ -14,5 +14,6 @@ export default {
 <style lang='scss' scoped>
 .imageInfo {
   flex: 1.5 1 0;
+  background-color: $red-color-light;
 }
 </style>

@@ -2,9 +2,18 @@
   <div class="imageShow">
     <div class="imageShow__area image">
       <div class="image__toggle">
-        <h3 class="imageView">Origin Image</h3>
+        <h3
+          class="imageView"
+          :class="{'selected' : isOriginImg==true}"
+          @click="selectOriginImg(true)"
+        >Origin Image</h3>
         <div v-if="detectedUrl">/</div>
-        <h3 class="imageView" v-if="detectedUrl">Detected Image</h3>
+        <h3
+          class="imageView"
+          :class="{'selected' : isOriginImg==false}"
+          v-if="detectedUrl"
+          @click="selectOriginImg(false)"
+        >Detected Image</h3>
       </div>
       <img class="image__display" :src="detectedUrl||url||imageUrl">
     </div>
@@ -27,12 +36,17 @@ export default {
       return "https://nature.mdc.mo.gov/sites/default/files/styles/centered_full/public/webform/2018/Common%20Buckeye-20181011-2222.jpeg";
     }
   },
-  // data() {
-  //   return {};
-  // },
+  data() {
+    return {
+      isOriginImg: true
+    };
+  },
   methods: {
     getImgUrl(pic) {
       return require("~/assets/images/" + pic);
+    },
+    selectOriginImg(value) {
+      this.isOriginImg = Boolean(value);
     }
   }
 };
@@ -40,7 +54,6 @@ export default {
 
 <style lang='scss' scoped>
 .imageShow {
-  background-color: $red-color-light;
   display: flex;
   flex-flow: column nowrap;
   flex: 2 1 0;
@@ -72,6 +85,10 @@ export default {
           transform: translate(-2px) scale(1.05);
           font-weight: bolder;
         }
+      }
+      .selected {
+        text-decoration: underline;
+        text-decoration-color: $primary-color;
       }
     }
 
