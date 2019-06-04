@@ -27,11 +27,7 @@
         @change="onPasteLink"
       >
     </div>
-    <button
-      class="imageUpload__btn"
-      :disabled="!url || detectedUrl"
-      @click="onDetect"
-    >Detect</button>
+    <button class="imageUpload__btn" :disabled="disableDetectBtn" @click="onDetect">Detect</button>
   </div>
 </template>
 
@@ -48,7 +44,8 @@ export default {
   },
   data() {
     return {
-      uploadIcon: "image-upload.png"
+      uploadIcon: "image-upload.png",
+      disableDetectBtn: true
     };
   },
   methods: {
@@ -59,6 +56,7 @@ export default {
       const originImage = event.target.files[0];
       this.uploadIcon = "image-uploaded.png";
       this.$store.commit("image/onFileChanged", originImage);
+      this.disableDetectBtn = false;
     },
     onPasteLink(event) {
       const link = event.target.value;
@@ -67,6 +65,7 @@ export default {
     async onDetect() {
       await this.$store.commit("image/onDetect");
       this.uploadIcon = "image-upload.png";
+      this.disableDetectBtn = true;
     }
   }
 };

@@ -15,7 +15,7 @@
           @click="selectOriginImg(false)"
         >Detected Image</h3>
       </div>
-      <img class="image__display" :src="detectedUrl||url||imageUrl">
+      <img class="image__display" :src="getDisplayImg()">
     </div>
     <div class="imageShow__history">Image story</div>
   </div>
@@ -32,18 +32,30 @@ export default {
       url: state => state.image.url,
       detectedUrl: state => state.image.detectedUrl
     }),
-    imageUrl() {
+    defaultImg() {
       return "https://nature.mdc.mo.gov/sites/default/files/styles/centered_full/public/webform/2018/Common%20Buckeye-20181011-2222.jpeg";
     }
   },
-  data() {
+  data: function() {
     return {
       isOriginImg: true
     };
   },
+  watch: {
+    detectedUrl: function() {
+      this.isOriginImg = false;
+    }
+  },
   methods: {
     getImgUrl(pic) {
       return require("~/assets/images/" + pic);
+    },
+    getDisplayImg() {
+      return this.isOriginImg && this.url
+        ? this.url
+        : !this.isOriginImg && this.detectedUrl
+        ? this.detectedUrl
+        : this.defaultImg;
     },
     selectOriginImg(value) {
       this.isOriginImg = Boolean(value);
