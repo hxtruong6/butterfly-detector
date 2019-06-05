@@ -1,22 +1,13 @@
-# butterfly-detector
+# Butterfly Detector
 
 > Website for detecting butterfly
 
-## Build Setup
+## Server 
+```python app.py```
+or 
+```flask run```
+to start server. 
 
-``` bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn run dev
-
-# build for production and launch server
-$ yarn run build
-$ yarn start
-
-# generate static project
-$ yarn run generate
-```
-
-For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+## Client 
+  - Websibe for user can interact by UI to detect a butterfly
+  - Start: ```yarn dev```

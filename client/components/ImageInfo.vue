@@ -21,7 +21,7 @@
     </div>
     <div class="imageInfo__notify" v-if="!name&&!second">
       <!-- <img src="https://cdn.dribbble.com/users/563824/screenshots/3907093/escalade.gif"> -->
-      No image
+      No information
     </div>
   </div>
 </template>
