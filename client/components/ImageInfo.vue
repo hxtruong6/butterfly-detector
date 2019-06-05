@@ -19,9 +19,9 @@
       </div>
       <a class="imageInfo__link" :href="butterfly.link" target="_blank">Detail more...</a>
     </div>
-    <div class="imageInfo__notify" v-if="!name">
+    <div class="imageInfo__notify" v-if="!name&&!second">
       <!-- <img src="https://cdn.dribbble.com/users/563824/screenshots/3907093/escalade.gif"> -->
-      {{result || "No image"}}
+      No image
     </div>
   </div>
 </template>

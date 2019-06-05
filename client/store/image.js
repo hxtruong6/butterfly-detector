@@ -1,5 +1,4 @@
 import FileSaver from 'file-saver';
-import { resolve } from 'q';
 
 export const state = () => ({
     originImage: null,
@@ -10,20 +9,6 @@ export const state = () => ({
     loading: false,
 });
 
-function getBlob(url) {
-    return new Promise((resolve, reject) => {
-        let blob = null;
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
-        xhr.responseType = 'blob'; //force the HTTP response, response-type header to be blob
-        xhr.onload = function() {
-            blob = xhr.response; //xhr.response is now a blob object
-            resolve(blob);
-        };
-        xhr.send();
-    });
-}
-
 export const mutations = {
     onFileChanged(state, originImage) {
         state.originImage = originImage;
@@ -32,17 +17,20 @@ export const mutations = {
     async onPasteLink(state, link) {
         state.loading = true;
         console.log('xxx 400 loading: ', state.loading);
-        state.url = link;
-        // const blob = await fetch(link).then((r) => {
-        //     // console.log('xxx 407 r: ', r);
-        //     // return new Blob([r.buffer], {
-        //     //     type: 'image/*',
-        //     // });
-        //     return r.blob();
-        // }); // need re-test
-        const blob = await getBlob(link);
-        state.originImage = blob;
-        console.log('xxx 403 blob: ', blob);
+
+        await fetch(link)
+            .then((res) => res.blob()) // Gets the response and returns it as a blob
+            .then((blob) => {
+                let objectURL = URL.createObjectURL(blob);
+                state.url = objectURL;
+
+                const file = new File([blob], `${new Date().getTime()}.jpg`, {
+                    type: 'image/png',
+                });
+                state.originImage = file;
+            });
+
+        console.log('xxx 403 blob: ', state.originImage);
         state.loading = false;
         console.log('xxx 401 loading: ', state.loading);
     },

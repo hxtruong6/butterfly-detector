@@ -79,10 +79,10 @@ export default {
     onPasteLink(event) {
       // Test: https://pbs.twimg.com/media/DiLYBR9VMAAfvSU.jpg
       const link = event.target.value;
-      if (this.checkURL(link)) {
+      // if (this.checkURL(link)) {
         this.$store.commit("image/onPasteLink", link);
         this.disableDetectBtn = false;
-      }
+      // }
     },
     // sleep(ms) {
     //   return new Promise(resolve => setTimeout(resolve, ms));
