@@ -117,6 +117,7 @@ export default {
   &__history {
     margin-left: 4px;
     flex: 1 1 0;
+    background-color: $red-color-light;
   }
 }
 </style>
