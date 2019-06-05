@@ -5,6 +5,7 @@
 ## Server
 
 - Download weight first: http://bit.ly/2MvPDpj
+- Update your configFile for specific type
 - Start: `python app.py` or `flask run` to start server.
 
 ## Client
