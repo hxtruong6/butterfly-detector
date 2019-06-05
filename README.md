@@ -12,4 +12,4 @@
 ## Client
 
 - Websibe for user can interact by UI to detect a butterfly
-- Start: `yarn dev`
+- Start: `yarn` then `yarn dev`
