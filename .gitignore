@@ -222,5 +222,5 @@ sw.*
 *.weights
 *.jpg
 *.png
-server/uploadFiles
+server/uploadFiles/*
 
