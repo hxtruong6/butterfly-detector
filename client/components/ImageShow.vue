@@ -17,7 +17,9 @@
       </div>
       <img class="image__display" :src="getDisplayImg()">
     </div>
-    <div class="imageShow__history">History</div>
+    <div class="imageShow__history history">
+      <div class="history__title">History</div>
+    </div>
   </div>
 </template>
 
@@ -71,6 +73,7 @@ export default {
   flex-flow: column nowrap;
   flex: 2 1 0;
   font-size: 1.5rem;
+  // padding: 4px;
 
   &__area,
   .image {
@@ -108,16 +111,20 @@ export default {
 
     &__display {
       align-self: center;
-      padding: 10px;
+      // padding: 10px;
       max-height: 85%;
       width: auto;
     }
   }
 
-  &__history {
-    margin-left: 4px;
+  &__history,
+  .history {
     flex: 1 1 0;
     background-color: $red-color-light;
+
+    &__title {
+      padding: 4px;
+    }
   }
 }
 </style>
