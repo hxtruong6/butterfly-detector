@@ -220,7 +220,5 @@ sw.*
 
 # For custom
 *.weights
-*.jpg
+# *.jpg
 *.png
-server/uploadFiles/*
-
