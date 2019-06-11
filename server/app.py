@@ -23,6 +23,7 @@ def process_out_info(s):
     print("Origin result: \n" + s + "\n")
     # Predicted in 27.107808 seconds.\nCommonBuckeye: 100%\n
     lines = s.split('\n')
+    print("xxx 001 lines: " + str( lines))
     second = re.findall("\d+\.\d+", lines[0])[0]
     info = lines[1].split(': ')
     res = {
@@ -42,7 +43,7 @@ def detect(imagePath):
     print("Start detecting...")
     info = subprocess.run([darknet, "detector", "test", dataFile, configFile, weightFile, imagePath],
                           capture_output=True)
-
+    print(info)
     result = process_out_info(info.stdout.decode("utf-8"))
     print("Finish detection")
     return result
@@ -67,6 +68,7 @@ def image_detection():
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(image_path)
             result = detect(image_path)
+            print("xxx 11023 resulte " + str(result))
 
     image_result = "predictions.jpg"
     return send_file(image_result, mimetype='image/*')
