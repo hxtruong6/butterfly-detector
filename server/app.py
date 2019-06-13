@@ -3,6 +3,7 @@ from flask import Flask, flash, request, send_file, jsonify
 from werkzeug.utils import secure_filename
 import sys
 import subprocess
+from subprocess import PIPE
 import re
 
 UPLOAD_FOLDER = './uploadFiles/'
@@ -20,10 +21,10 @@ def allowed_file(filename):
 
 
 def process_out_info(s):
-    print("Origin result: \n" + s + "\n")
+    # print("Origin result: \n" + s + "\n")
     # Predicted in 27.107808 seconds.\nCommonBuckeye: 100%\n
     lines = s.split('\n')
-    print("xxx 001 lines: " + str( lines))
+    # print("xxx 001 lines: " + str(lines))
     second = re.findall("\d+\.\d+", lines[0])[0]
     info = lines[1].split(': ')
     res = {
@@ -42,8 +43,8 @@ def detect(imagePath):
     weightFile = b'butterfly-yolov3_6000.weights'
     print("Start detecting...")
     info = subprocess.run([darknet, "detector", "test", dataFile, configFile, weightFile, imagePath],
-                          capture_output=True)
-    print(info)
+                          stdout=PIPE, stderr=PIPE)
+    # print(str(info)
     result = process_out_info(info.stdout.decode("utf-8"))
     print("Finish detection")
     return result
@@ -68,7 +69,6 @@ def image_detection():
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(image_path)
             result = detect(image_path)
-            print("xxx 11023 resulte " + str(result))
 
     image_result = "predictions.jpg"
     return send_file(image_result, mimetype='image/*')
