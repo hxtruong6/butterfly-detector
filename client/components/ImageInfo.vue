@@ -35,15 +35,15 @@ export default {
     ...mapState({
       result: state => state.image.result,
       butterfly: state => {
-        console.log("xxx 320 state: ", state);
+        // console.log("xxx 320 state: ", state);
         if (state.image.result && state.image.result.name) {
           const name = state.image.result.name;
-          console.log("xxx 325 keys: ", Object.keys(state.butterfly.data));
+          // console.log("xxx 325 keys: ", Object.keys(state.butterfly.data));
           const butterfly = Object.keys(state.butterfly.data).find(
             b => b.toLowerCase() === name.toLowerCase()
           );
-          console.log("xxx 305 butterfly: ", butterfly);
-          return state.butterfly.data[butterfly];
+          // console.log("xxx 305 butterfly: ", butterfly);
+          return state.butterfly.data[butterfly] || {};
         }
       }
     })
