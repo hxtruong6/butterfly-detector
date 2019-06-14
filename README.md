@@ -13,3 +13,6 @@
 
 - Websibe for user can interact by UI to detect a butterfly
 - Start: `yarn` then `yarn dev`
+
+## Node
+- Server is implemented on `python 3.7` (it has already fixed on `python 3.6`)
